@@ -10,21 +10,43 @@ intents.message_content = True
 
 key = os.getenv("DISCORD_TOKEN")
 
-bot = commands.Bot(command_prefix='!', intents=intents, help_command=None)
+bot = commands.Bot(command_prefix='+', intents=intents, help_command=None)
+
+# Eventos
 
 @bot.event
 async def on_ready():
     print("Bot online!")
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-    
-    if message.guild is None:
-        await message.channel.send(f"Olá, senhor! é um prazer estar ativo. Em qual fase do meu aprendizado estou?")
-    else:
-        await bot.process_commands(message)
+# Comandos
 
+# Respondendo via DM
+@bot.command("resposta", aliases=["responder", "answer"])
+async def answer(ctx, answer):
+    if ctx.guild is None:
+        if answer == "1235":
+            await ctx.send("✅ Resposta correta!")
+        else:
+            await ctx.send("❌ Resposta incorreta.")
+    else:
+        await ctx.send("Use esse comando apenas via DM.")
+
+
+# Comandos administradores
+
+# Inserir inscrito
+@bot.command("admin_sub")
+async def insertSub(ctx, user_id):
+    return
+
+# Remover inscrito
+@bot.command("admin_del")
+async def insertSub(ctx, user_id):
+    return
+
+# Listar detalhes de um enigma
+@bot.command("admin_info")
+async def insertSub(ctx, user_id):
+    return
 
 bot.run(key)
